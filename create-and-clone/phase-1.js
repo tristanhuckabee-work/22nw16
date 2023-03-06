@@ -1,17 +1,32 @@
 function stretch() {
-  // Your code here
+  const p = new Promise((resolve, reject) => {
+    setTimeout(() => resolve(), 1000);
+  })
+  p.then(() => console.log('done stretching'));
+  return p;
 }
 
 function runOnTreadmill() {
-  // Your code here
+  const p = new Promise((resolve, reject) => {
+    setTimeout(() => resolve(), 500);
+  })
+  p.then(() => console.log('done running on the treadmill'));
+  return p;
 }
 
 function liftWeights() {
-  // Your code here
+  const p = new Promise((resolve, reject) => {
+    setTimeout(() => resolve(), 2000);
+  })
+  p.then(() => console.log('done lifting weights'));
+  return p;
 }
 
 function workout() {
-  // Your code here
+  stretch()
+  .then(runOnTreadmill)
+  .then(liftWeights)
+  .then(() => console.log('done working out'));
 }
 
 
