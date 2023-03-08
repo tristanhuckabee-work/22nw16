@@ -25,7 +25,7 @@ const server = http.createServer((req, res) => {
         }, {});
 
       // Log the body of the request to the terminal
-      console.log(req.body);
+      console.log('URLENCODED: ', req.body);
     }
 
     const resBody = {
