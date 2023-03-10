@@ -1,31 +1,34 @@
 function stretch() {
-  return new Promise((resolve) => {
-    setTimeout(resolve(), 1000);
-  }).then(() => console.log('done stretching'));
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('done stretching');
+      resolve();
+    }, 1000);
+  });
 }
-
 function runOnTreadmill() {
-  return new Promise((resolve) => {
-    setTimeout(resolve(), 500);
-  }).then(() => console.log('done running on treadmill'));
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('done running on treadmill');
+      resolve();
+    }, 500);
+  });
 }
-
 function liftWeights() {
-  return new Promise((resolve) => {
-    setTimeout(resolve(), 2000);
-  }).then(() => console.log('done lifting weights'));
-  // let promise = new Promise(...).then(...)
-  // return promise;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('done lifting weights');
+      resolve();
+    }, 2000);
+  });
 }
-
 function workout() {
   stretch()
     .then(runOnTreadmill)
     .then(liftWeights)
-    .then(() => console.log('done working out'));
+    .then(() => console.log('done working out'))
+    .catch(e => console.log(e));
 }
-
-
 /* ============================ TEST YOUR CODE ============================
 
 Run the file (`node phase-1.js`) and check your output against the expected

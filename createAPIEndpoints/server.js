@@ -54,41 +54,67 @@ const server = http.createServer((req, res) => {
     // GET /dogs
     if (req.method === 'GET' && req.url === '/dogs') {
       // Your code here
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      return res.end(JSON.stringify(dogs));
     }
-
     // GET /dogs/:dogId
     if (req.method === 'GET' && req.url.startsWith('/dogs/')) {
       const urlParts = req.url.split('/'); // ['', 'dogs', '1']
       if (urlParts.length === 3) {
         const dogId = urlParts[2];
         // Your code here
+        let dog = dogs.find(el => el.dogId === Number(dogId));
+
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json");
+        return res.end(JSON.stringify(dog));
       }
     }
-
     // POST /dogs
     if (req.method === 'POST' && req.url === '/dogs') {
       const { name, age } = req.body;
       // Your code here
-    }
+      let dog = req.body;
+      dog.dogId = getNewDogId();
 
+      dogs.push(dog);
+
+      res.statusCode = 201;
+      res.setHeader("Content-Type", "application/json");
+      return res.end(JSON.stringify(dog));
+    }
     // PUT or PATCH /dogs/:dogId
     if ((req.method === 'PUT' || req.method === 'PATCH')  && req.url.startsWith('/dogs/')) {
       const urlParts = req.url.split('/');
       if (urlParts.length === 3) {
         const dogId = urlParts[2];
         // Your code here
+        const {name, age} = req.body;
+        let dog = dogs.find((dog,i) => dog.dogId === dogId / 1);
+        dog.name = name;
+        dog.age = age;
+
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json");
+        return res.end(JSON.stringify(dog));
       }
     }
-
     // DELETE /dogs/:dogId
     if (req.method === 'DELETE' && req.url.startsWith('/dogs/')) {
       const urlParts = req.url.split('/');
       if (urlParts.length === 3) {
         const dogId = urlParts[2];
         // Your code here
+        dogs.forEach((dog, i) => {
+          if (dog.dogId === dogId/1) dogs.splice(i, 1)
+        });
+
+        res.statusCode = 200
+        res.setHeader("Content-Type", "application/json");
+        return res.end(JSON.stringify("Successfully deleted"));
       }
     }
-
     // No matching endpoint
     res.statusCode = 404;
     res.setHeader('Content-Type', 'application/json');
